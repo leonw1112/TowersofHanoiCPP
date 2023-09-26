@@ -28,11 +28,19 @@ void Game::setup(int num)
 void Game::print()
 {
 
-    for (int i = 0; i < va->size(); i++)
+    for (std::size_t i = 0; i < va->size(); i++)
     {
-        // int x = va->at(i).GetSize();
         cout << va->at(i).GetSize() << " | " << va->at(i).GetSize() << "\n";
-        // cout << i << endl;
     }
     cout << "--A-- \n";
+    for (std::size_t i = 0; i < vb->size(); i++)
+    {
+        cout << vb->at(i).GetSize() << " | " << vb->at(i).GetSize() << "\n";
+    }
+    cout << "--B-- \n";
+    for (std::size_t i = 0; i < vc->size(); i++)
+    {
+        cout << vc->at(i).GetSize() << " | " << vc->at(i).GetSize() << "\n";
+    }
+    cout << "--C-- \n";
 }
