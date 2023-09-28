@@ -1,14 +1,12 @@
-#include <iostream>
-#include <vector>
 #include "game.h"
-#include "slices.h"
+#include <string>
 using namespace std;
-
 Game::Game()
 {
     va = new std::vector<Slice>();
     vb = new std::vector<Slice>();
     vc = new std::vector<Slice>();
+    count_moves = 0;
 }
 
 Game::~Game()
@@ -20,27 +18,93 @@ Game::~Game()
 
 void Game::setup(int num)
 {
-    for (int i = 1; i <= num; i++)
+    for (int i = num; i > 0; i--)
     {
         va->push_back(Slice("S" + i, i));
     }
 }
+
 void Game::print()
 {
+    cout << "A = ";
+    for (int i = static_cast<int>(va->size()) - 1; i >= 0; i--)
+    {
+        cout << va->at(i).GetSize() << ", ";
+    }
+    cout << " | ";
 
-    for (std::size_t i = 0; i < va->size(); i++)
+    cout << "B = ";
+    for (int i = static_cast<int>(vb->size()) - 1; i >= 0; i--)
     {
-        cout << va->at(i).GetSize() << " | " << va->at(i).GetSize() << "\n";
+        cout << vb->at(i).GetSize() << ", ";
     }
-    cout << "--A-- \n";
-    for (std::size_t i = 0; i < vb->size(); i++)
+    cout << " | ";
+
+    cout << "C = ";
+    for (int i = static_cast<int>(vc->size()) - 1; i >= 0; i--)
     {
-        cout << vb->at(i).GetSize() << " | " << vb->at(i).GetSize() << "\n";
+        cout << vc->at(i).GetSize() << ", ";
     }
-    cout << "--B-- \n";
-    for (std::size_t i = 0; i < vc->size(); i++)
+    cout << " | ";
+    cout << count_moves << ".";
+    cout << endl;
+}
+
+void Game::move(Tower source, Tower destination)
+{
+    std::vector<Slice> *sourceTower;
+    std::vector<Slice> *destinationTower;
+    switch (source)
     {
-        cout << vc->at(i).GetSize() << " | " << vc->at(i).GetSize() << "\n";
+    case TowerA:
+        sourceTower = va;
+        break;
+    case TowerB:
+        sourceTower = vb;
+        break;
+    case TowerC:
+        sourceTower = vc;
+        break;
     }
-    cout << "--C-- \n";
+    switch (destination)
+    {
+    case TowerA:
+        destinationTower = va;
+        break;
+    case TowerB:
+        destinationTower = vb;
+        break;
+    case TowerC:
+        destinationTower = vc;
+        break;
+    }
+    if (sourceTower->size() > 0)
+    {
+        Slice x = sourceTower->back();
+        sourceTower->pop_back();
+        destinationTower->push_back(x);
+    }
+    count_moves++;
+    print();
+}
+
+void Game::solve_recursive(int n, Tower source, Tower auxiliary, Tower destination)
+{
+    if (n == 1)
+    {
+
+        move(source, destination);
+        return;
+    }
+
+    solve_recursive(n - 1, source, destination, auxiliary);
+
+    move(source, destination);
+
+    solve_recursive(n - 1, auxiliary, source, destination);
+}
+void Game::solve()
+{
+    int numSlices = va->size();
+    solve_recursive(numSlices, TowerA, TowerB, TowerC);
 }
