@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    int sli = 3;
+    int sli = 5;
     // cout << "How many slices?: ";
     // cin >> sli;
 
@@ -13,7 +13,6 @@ int main()
     g->setup(sli);
     // g->move(TowerA, TowerB);
     g->solve();
-
     delete g;
     return 0;
 }

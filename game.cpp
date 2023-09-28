@@ -90,18 +90,15 @@ void Game::move(Tower source, Tower destination)
 
 void Game::solve_recursive(int n, Tower source, Tower auxiliary, Tower destination)
 {
-    if (n == 1)
+    if (n > 0)
     {
 
+        solve_recursive(n - 1, source, destination, auxiliary);
+
         move(source, destination);
-        return;
+
+        solve_recursive(n - 1, auxiliary, source, destination);
     }
-
-    solve_recursive(n - 1, source, destination, auxiliary);
-
-    move(source, destination);
-
-    solve_recursive(n - 1, auxiliary, source, destination);
 }
 void Game::solve()
 {
