@@ -23,6 +23,9 @@ public:
     void move(Tower source, Tower destination);
     void solve();
     void solve_recursive(int n, Tower source, Tower auxiliary, Tower destination);
+    void solve_iterative(int n, Tower source, Tower auxiliary, Tower destination);
+    void save();
+    void load();
 
 private:
     std::vector<Slice> *va;
