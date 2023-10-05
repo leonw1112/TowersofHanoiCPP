@@ -6,24 +6,6 @@
 #include <string>
 #include <vector>
 
-#define RESET "\033[0m"
-#define BLACK "\033[30m"              /* Black */
-#define RED "\033[31m"                /* Red */
-#define GREEN "\033[32m"              /* Green */
-#define YELLOW "\033[33m"             /* Yellow */
-#define BLUE "\033[34m"               /* Blue */
-#define MAGENTA "\033[35m"            /* Magenta */
-#define CYAN "\033[36m"               /* Cyan */
-#define WHITE "\033[37m"              /* White */
-#define BOLDBLACK "\033[1m\033[30m"   /* Bold Black */
-#define BOLDRED "\033[1m\033[31m"     /* Bold Red */
-#define BOLDGREEN "\033[1m\033[32m"   /* Bold Green */
-#define BOLDYELLOW "\033[1m\033[33m"  /* Bold Yellow */
-#define BOLDBLUE "\033[1m\033[34m"    /* Bold Blue */
-#define BOLDMAGENTA "\033[1m\033[35m" /* Bold Magenta */
-#define BOLDCYAN "\033[1m\033[36m"    /* Bold Cyan */
-#define BOLDWHITE "\033[1m\033[37m"   /* Bold White */
-
 using namespace std;
 Game::Game()
 {
@@ -42,9 +24,11 @@ Game::~Game()
 
 void Game::setup(int num)
 {
+    cout << "Preparing Game with " << num << " Slices." << endl;
+    const char *color[5] = {"blue", "red", "yellow", "green", "magenta"};
     for (int i = num; i > 0; i--)
     {
-        va->push_back(Slice("S" + i, i));
+        va->push_back(Slice("S" + i, i, color[i % num]));
     }
 }
 
@@ -53,21 +37,93 @@ void Game::print()
     cout << "A = ";
     for (int i = static_cast<int>(va->size()) - 1; i >= 0; i--)
     {
-        cout << va->at(i).GetSize() << ", ";
+        if (va->at(i).GetColor() == "blue")
+        {
+            cout << "\033[1;34m" << va->at(i).GetSize() << "\033[1;0m"
+                 << ", ";
+        }
+        else if (va->at(i).GetColor() == "red")
+        {
+            cout << "\033[1;31m" << va->at(i).GetSize() << "\033[1;0m"
+                 << ", ";
+        }
+        else if (va->at(i).GetColor() == "yellow")
+        {
+            cout << "\033[1;33m" << va->at(i).GetSize() << "\033[1;0m"
+                 << ", ";
+        }
+        else if (va->at(i).GetColor() == "green")
+        {
+            cout << "\033[1;32m" << va->at(i).GetSize() << "\033[1;0m"
+                 << ", ";
+        }
+        else if (va->at(i).GetColor() == "magenta")
+        {
+            cout << "\033[1;35m" << va->at(i).GetSize() << "\033[1;0m"
+                 << ", ";
+        }
     }
     cout << " | ";
 
     cout << "B = ";
     for (int i = static_cast<int>(vb->size()) - 1; i >= 0; i--)
     {
-        cout << vb->at(i).GetSize() << ", ";
+        if (vb->at(i).GetColor() == "blue")
+        {
+            cout << "\033[1;34m" << vb->at(i).GetSize() << "\033[1;0m"
+                 << ", ";
+        }
+        else if (vb->at(i).GetColor() == "red")
+        {
+            cout << "\033[1;31m" << vb->at(i).GetSize() << "\033[1;0m"
+                 << ", ";
+        }
+        else if (vb->at(i).GetColor() == "yellow")
+        {
+            cout << "\033[1;33m" << vb->at(i).GetSize() << "\033[1;0m"
+                 << ", ";
+        }
+        else if (vb->at(i).GetColor() == "green")
+        {
+            cout << "\033[1;32m" << vb->at(i).GetSize() << "\033[1;0m"
+                 << ", ";
+        }
+        else if (vb->at(i).GetColor() == "magenta")
+        {
+            cout << "\033[1;35m" << vb->at(i).GetSize() << "\033[1;0m"
+                 << ", ";
+        }
     }
     cout << " | ";
 
     cout << "C = ";
     for (int i = static_cast<int>(vc->size()) - 1; i >= 0; i--)
     {
-        cout << vc->at(i).GetSize() << ", ";
+        if (vc->at(i).GetColor() == "blue")
+        {
+            cout << "\033[1;34m" << vc->at(i).GetSize() << "\033[1;0m"
+                 << ", ";
+        }
+        else if (vc->at(i).GetColor() == "red")
+        {
+            cout << "\033[1;31m" << vc->at(i).GetSize() << "\033[1;0m"
+                 << ", ";
+        }
+        else if (vc->at(i).GetColor() == "yellow")
+        {
+            cout << "\033[1;33m" << vc->at(i).GetSize() << "\033[1;0m"
+                 << ", ";
+        }
+        else if (vc->at(i).GetColor() == "green")
+        {
+            cout << "\033[1;32m" << vc->at(i).GetSize() << "\033[1;0m"
+                 << ", ";
+        }
+        else if (vc->at(i).GetColor() == "magenta")
+        {
+            cout << "\033[1;35m" << vc->at(i).GetSize() << "\033[1;0m"
+                 << ", ";
+        }
     }
     cout << " | ";
     cout << count_moves << ".";

@@ -1,9 +1,10 @@
 #include "slices.h"
 using namespace std;
-Slice::Slice(std::string name, int size)
+Slice::Slice(std::string name, int size, std::string color)
 {
     _name = name;
     _size = size;
+    _color = color;
 }
 int Slice::GetSize()
 {

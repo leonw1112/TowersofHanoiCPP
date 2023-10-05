@@ -12,7 +12,7 @@ private:
     std::string _color;
 
 public:
-    Slice(std::string name, int size);
+    Slice(std::string name, int size, std::string color);
     std::string GetName();
     std::string GetColor();
     int GetSize();
