@@ -30,6 +30,7 @@ void Game::setup(int num)
     {
         va->push_back(Slice("S" + i, i, color[i % num]));
     }
+    num_slices = num;
 }
 
 void Game::print()
@@ -182,36 +183,75 @@ void Game::solve_recursive(int n, Tower source, Tower auxiliary, Tower destinati
 }
 void Game::solve_iterative(int n, Tower source, Tower auxiliary, Tower destination)
 {
-    int total_moves = (1 << n) - 1;
-    if (n % 2 == 1)
+    cout << "Initial State:" << endl;
+    print();
+    int test = 1;
+    if (num_slices % 2 == 0)
     {
-        Tower temp = auxiliary;
-        auxiliary = destination;
-        destination = temp;
-    }
+        // clockwise
+        while (va->size() > 0 || vb->size() > 0)
+        {
+            cout << "--------" << endl;
+            if (test == 1)
+            {
+                move(TowerA, TowerB);
+            }
+            else if (test == 2)
+            {
+                move(TowerB, TowerC);
+            }
+            else if (test == 3)
+            {
+                move(TowerC, TowerA);
+                test = 0;
+            }
 
-    for (int i = 1; i <= total_moves; ++i)
-    {
-        if (i % 3 == 1)
-        {
-            move(source, destination);
-        }
-        else if (i % 3 == 2)
-        {
-            move(source, auxiliary);
-        }
-        else
-        {
-            move(auxiliary, destination);
+            // if (va->back().GetSize() < vb->end()->GetSize())
+            if ((va->size() > 0 ? va->back().GetSize() : __INT_MAX__) < (vb->size() > 0 ? vb->back().GetSize() : __INT_MAX__) && (va->size() > 0 ? va->back().GetSize() : 0) != 1)
+            {
+                move(TowerA, TowerB);
+            }
+            else if ((va->size() > 0 ? va->back().GetSize() : __INT_MAX__) < (vc->size() > 0 ? vc->back().GetSize() : __INT_MAX__) && (va->size() > 0 ? va->back().GetSize() : 0) != 1)
+            {
+                move(TowerA, TowerC);
+            }
+            // else if ((vb->back().GetSize() < vc->end()->GetSize()))
+            else if ((vb->size() > 0 ? vb->back().GetSize() : __INT_MAX__) < (vc->size() > 0 ? vc->back().GetSize() : __INT_MAX__) && (vb->size() > 0 ? vb->back().GetSize() : 0) != 1)
+            {
+                move(TowerB, TowerC);
+            }
+            // else if ((vb->back().GetSize() < va->end()->GetSize()))
+            else if ((vb->size() > 0 ? vb->back().GetSize() : __INT_MAX__) < (va->size() > 0 ? va->back().GetSize() : __INT_MAX__) && (vb->size() > 0 ? vb->back().GetSize() : 0) != 1)
+            {
+                move(TowerB, TowerA);
+            }
+            // else if ((vc->back().GetSize() < va->end()->GetSize()))
+            else if ((vc->size() > 0 ? vc->back().GetSize() : __INT_MAX__) < (va->size() > 0 ? va->back().GetSize() : __INT_MAX__) && (vc->size() > 0 ? vc->back().GetSize() : 0) != 1)
+            {
+                move(TowerC, TowerA);
+            }
+            // else if ((vc->back().GetSize() < vb->end()->GetSize()))
+            else if ((vc->size() > 0 ? vc->back().GetSize() : __INT_MAX__) < (vb->size() > 0 ? vb->back().GetSize() : __INT_MAX__) && (vc->size() > 0 ? vc->back().GetSize() : 0) != 1)
+            {
+                move(TowerC, TowerB);
+            }
+
+            test++;
         }
     }
+    else
+    {
+        // counter clockwise
+    }
+    cout << "Final State:" << endl;
+    print();
 }
 
 void Game::solve()
 {
     int numSlices = va->size();
-    solve_recursive(numSlices, TowerA, TowerB, TowerC);
-    // solve_iterative(numSlices, TowerA, TowerB, TowerC);
+    // solve_recursive(numSlices, TowerA, TowerB, TowerC);
+    solve_iterative(numSlices, TowerA, TowerB, TowerC);
 }
 
 void Game::save()

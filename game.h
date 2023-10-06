@@ -32,6 +32,7 @@ private:
     std::vector<Slice> *vb;
     std::vector<Slice> *vc;
     int count_moves;
+    int num_slices;
 };
 
 #endif

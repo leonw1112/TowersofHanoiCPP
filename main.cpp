@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    int sli = 5;
+    int sli = 4;
     // cout << "How many slices?: ";
     // cin >> sli;
     Game *g = new Game();
