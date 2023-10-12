@@ -31,7 +31,39 @@ void Game::setup(int num)
     }
     num_slices = num;
 }
+
 void Game::print()
+{
+    // print_bw();
+    print_color();
+}
+void Game::print_bw()
+{
+    cout << "A = ";
+    for (int i = static_cast<int>(va->size()) - 1; i >= 0; i--)
+    {
+        cout << va->at(i).GetSize() << ", ";
+    }
+    cout << " | ";
+
+    cout << "B = ";
+    for (int i = static_cast<int>(vb->size()) - 1; i >= 0; i--)
+    {
+        cout << vb->at(i).GetSize() << ", ";
+    }
+    cout << " | ";
+
+    cout << "C = ";
+    for (int i = static_cast<int>(vc->size()) - 1; i >= 0; i--)
+    {
+        cout << vc->at(i).GetSize() << ", ";
+    }
+    cout << " | ";
+    cout << count_moves << ".";
+    cout << endl;
+}
+
+void Game::print_color()
 {
     cout << "A = ";
     for (int i = static_cast<int>(va->size()) - 1; i >= 0; i--)
@@ -181,27 +213,32 @@ void Game::solve_recursive(int n, Tower source, Tower auxiliary, Tower destinati
 }
 void Game::solve_iterative(int n, Tower source, Tower auxiliary, Tower destination)
 {
+
+    cout << num_slices << endl;
+
     cout << "Initial State:" << endl;
     print();
-    int test = 1;
+
     if (num_slices % 2 == 0)
     {
         // clockwise
         while (va->size() > 0 || vb->size() > 0)
         {
             cout << "--------" << endl;
-            if (test == 1)
+
+            if (va->size() > 0 && va->back().GetSize() == 1)
             {
                 move(TowerA, TowerB);
             }
-            else if (test == 2)
+
+            else if (vb->size() > 0 && vb->back().GetSize() == 1)
             {
                 move(TowerB, TowerC);
             }
-            else if (test == 3)
+
+            else if (vc->size() > 0 && vc->back().GetSize() == 1)
             {
                 move(TowerC, TowerA);
-                test = 0;
             }
 
             // if (va->back().GetSize() < vb->end()->GetSize())
@@ -233,8 +270,6 @@ void Game::solve_iterative(int n, Tower source, Tower auxiliary, Tower destinati
             {
                 move(TowerC, TowerB);
             }
-
-            test++;
         }
     }
     else
@@ -243,18 +278,20 @@ void Game::solve_iterative(int n, Tower source, Tower auxiliary, Tower destinati
         while (va->size() > 0 || vb->size() > 0)
         {
             cout << "--------" << endl;
-            if (test == 1)
+
+            if (va->size() > 0 && va->back().GetSize() == 1)
             {
                 move(TowerA, TowerC);
             }
-            else if (test == 2)
+
+            else if (vc->size() > 0 && vc->back().GetSize() == 1)
             {
                 move(TowerC, TowerB);
             }
-            else if (test == 3)
+
+            else if (vb->size() > 0 && vb->back().GetSize() == 1)
             {
                 move(TowerB, TowerA);
-                test = 0;
             }
 
             // if (va->back().GetSize() < vb->end()->GetSize())
@@ -286,8 +323,6 @@ void Game::solve_iterative(int n, Tower source, Tower auxiliary, Tower destinati
             {
                 move(TowerC, TowerB);
             }
-
-            test++;
         }
     }
     cout << "Final State:" << endl;
@@ -330,10 +365,11 @@ void Game::save()
 void Game::load()
 {
     ifstream savefile;
-    savefile.open("savefile.txt");
+    savefile.open("savefile2.txt");
     vector<string> temp;
     string saved;
 
+    num_slices = 0;
     va->clear();
     vb->clear();
     vc->clear();
@@ -350,6 +386,9 @@ void Game::load()
 
                         int x = stoi(temp.at(i));
                         va->push_back(Slice("S" + x, x, color[x % 5]));
+
+                        if (x > num_slices)
+                            num_slices = x;
                     }
                     temp.clear();
                 }
@@ -360,6 +399,9 @@ void Game::load()
 
                         int x = stoi(temp.at(i));
                         vb->push_back(Slice("S" + x, x, color[x % 5]));
+
+                        if (x > num_slices)
+                            num_slices = x;
                     }
                     temp.clear();
                 }
@@ -370,6 +412,9 @@ void Game::load()
 
                         int x = stoi(temp.at(i));
                         vc->push_back(Slice("S" + x, x, color[x % 5]));
+
+                        if (x > num_slices)
+                            num_slices = x;
                     }
                     temp.clear();
                 }

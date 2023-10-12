@@ -20,6 +20,8 @@ public:
 
     void setup(int num);
     void print();
+    void print_bw();
+    void print_color();
     void move(Tower source, Tower destination);
     void solve();
     void solve_recursive(int n, Tower source, Tower auxiliary, Tower destination);
