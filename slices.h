@@ -16,6 +16,12 @@ public:
     std::string GetName();
     std::string GetColor();
     int GetSize();
-};
 
+    struct Slices
+    {
+        int loadsave;
+        Slices(int loadsave) : loadsave(loadsave) {}
+        Slices() : loadsave(0) {}
+    };
+};
 #endif

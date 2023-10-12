@@ -25,14 +25,12 @@ Game::~Game()
 void Game::setup(int num)
 {
     cout << "Preparing Game with " << num << " Slices." << endl;
-    const char *color[5] = {"blue", "red", "yellow", "green", "magenta"};
     for (int i = num; i > 0; i--)
     {
-        va->push_back(Slice("S" + i, i, color[i % num]));
+        va->push_back(Slice("S" + i, i, color[i % 5]));
     }
     num_slices = num;
 }
-
 void Game::print()
 {
     cout << "A = ";
@@ -307,27 +305,79 @@ void Game::save()
 {
     ofstream savefile;
     savefile.open("savefile.txt");
-    savefile << "A;";
+    savefile << "A  ";
     for (int i = static_cast<int>(va->size()) - 1; i >= 0; i--)
     {
-        savefile << va->at(i).GetSize() << ";";
+        savefile << va->at(i).GetSize() << "    ";
     }
     savefile << endl;
-    savefile << "B;";
+    savefile << "B  ";
     for (int i = static_cast<int>(vb->size()) - 1; i >= 0; i--)
     {
-        savefile << vb->at(i).GetSize() << ";";
+        savefile << vb->at(i).GetSize() << "    ";
     }
     savefile << endl;
-    savefile << "C;";
+    savefile << "C  ";
     for (int i = static_cast<int>(vc->size()) - 1; i >= 0; i--)
     {
-        savefile << vc->at(i).GetSize() << ";";
+        savefile << vc->at(i).GetSize() << "    ";
     }
     savefile << endl;
+    savefile << "X";
     savefile.close();
 }
 
 void Game::load()
 {
+    ifstream savefile;
+    savefile.open("savefile.txt");
+    vector<string> temp;
+    string saved;
+
+    va->clear();
+    vb->clear();
+    vc->clear();
+    while (savefile >> saved)
+    {
+        if (saved == "A" || saved == "B" || saved == "C" || saved == "X")
+        {
+            if (temp.size() > 0)
+            {
+                if (temp.at(0) == "A")
+                {
+                    for (int i = temp.size() - 1; i > 0; i--)
+                    {
+
+                        int x = stoi(temp.at(i));
+                        va->push_back(Slice("S" + x, x, color[x % 5]));
+                    }
+                    temp.clear();
+                }
+                else if (temp.at(0) == "B")
+                {
+                    for (int i = temp.size() - 1; i > 0; i--)
+                    {
+
+                        int x = stoi(temp.at(i));
+                        vb->push_back(Slice("S" + x, x, color[x % 5]));
+                    }
+                    temp.clear();
+                }
+                else if (temp.at(0) == "C")
+                {
+                    for (int i = temp.size() - 1; i > 0; i--)
+                    {
+
+                        int x = stoi(temp.at(i));
+                        vc->push_back(Slice("S" + x, x, color[x % 5]));
+                    }
+                    temp.clear();
+                }
+            }
+        }
+        temp.push_back(saved);
+    }
+
+    savefile.close();
+    print();
 }

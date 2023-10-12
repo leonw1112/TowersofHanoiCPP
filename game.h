@@ -33,6 +33,7 @@ private:
     std::vector<Slice> *vc;
     int count_moves;
     int num_slices;
+    const char *color[5] = {"blue", "red", "yellow", "green", "magenta"};
 };
 
 #endif
