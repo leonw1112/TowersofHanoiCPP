@@ -34,7 +34,6 @@ void Game::setup(int num)
 
 void Game::print()
 {
-    // print_bw();
     print_color();
 }
 void Game::print_bw()
@@ -195,6 +194,12 @@ void Game::move(Tower source, Tower destination)
         sourceTower->pop_back();
         destinationTower->push_back(x);
     }
+
+    if ((sourceTower->size() > 0 ? sourceTower->back().GetSize() : __INT_MAX__) < (destinationTower->size() > 0 ? destinationTower->back().GetSize() : __INT_MAX__))
+    {
+        throw "Wrong move!";
+    }
+
     count_moves++;
     print();
     save();
@@ -241,7 +246,6 @@ void Game::solve_iterative(int n, Tower source, Tower auxiliary, Tower destinati
                 move(TowerC, TowerA);
             }
 
-            // if (va->back().GetSize() < vb->end()->GetSize())
             if ((va->size() > 0 ? va->back().GetSize() : __INT_MAX__) < (vb->size() > 0 ? vb->back().GetSize() : __INT_MAX__) && (va->size() > 0 ? va->back().GetSize() : 0) != 1)
             {
                 move(TowerA, TowerB);
@@ -250,22 +254,18 @@ void Game::solve_iterative(int n, Tower source, Tower auxiliary, Tower destinati
             {
                 move(TowerA, TowerC);
             }
-            // else if ((vb->back().GetSize() < vc->end()->GetSize()))
             else if ((vb->size() > 0 ? vb->back().GetSize() : __INT_MAX__) < (vc->size() > 0 ? vc->back().GetSize() : __INT_MAX__) && (vb->size() > 0 ? vb->back().GetSize() : 0) != 1)
             {
                 move(TowerB, TowerC);
             }
-            // else if ((vb->back().GetSize() < va->end()->GetSize()))
             else if ((vb->size() > 0 ? vb->back().GetSize() : __INT_MAX__) < (va->size() > 0 ? va->back().GetSize() : __INT_MAX__) && (vb->size() > 0 ? vb->back().GetSize() : 0) != 1)
             {
                 move(TowerB, TowerA);
             }
-            // else if ((vc->back().GetSize() < va->end()->GetSize()))
             else if ((vc->size() > 0 ? vc->back().GetSize() : __INT_MAX__) < (va->size() > 0 ? va->back().GetSize() : __INT_MAX__) && (vc->size() > 0 ? vc->back().GetSize() : 0) != 1)
             {
                 move(TowerC, TowerA);
             }
-            // else if ((vc->back().GetSize() < vb->end()->GetSize()))
             else if ((vc->size() > 0 ? vc->back().GetSize() : __INT_MAX__) < (vb->size() > 0 ? vb->back().GetSize() : __INT_MAX__) && (vc->size() > 0 ? vc->back().GetSize() : 0) != 1)
             {
                 move(TowerC, TowerB);
@@ -294,7 +294,6 @@ void Game::solve_iterative(int n, Tower source, Tower auxiliary, Tower destinati
                 move(TowerB, TowerA);
             }
 
-            // if (va->back().GetSize() < vb->end()->GetSize())
             if ((va->size() > 0 ? va->back().GetSize() : __INT_MAX__) < (vb->size() > 0 ? vb->back().GetSize() : __INT_MAX__) && (va->size() > 0 ? va->back().GetSize() : 0) != 1)
             {
                 move(TowerA, TowerB);
@@ -303,22 +302,18 @@ void Game::solve_iterative(int n, Tower source, Tower auxiliary, Tower destinati
             {
                 move(TowerA, TowerC);
             }
-            // else if ((vb->back().GetSize() < vc->end()->GetSize()))
             else if ((vb->size() > 0 ? vb->back().GetSize() : __INT_MAX__) < (vc->size() > 0 ? vc->back().GetSize() : __INT_MAX__) && (vb->size() > 0 ? vb->back().GetSize() : 0) != 1)
             {
                 move(TowerB, TowerC);
             }
-            // else if ((vb->back().GetSize() < va->end()->GetSize()))
             else if ((vb->size() > 0 ? vb->back().GetSize() : __INT_MAX__) < (va->size() > 0 ? va->back().GetSize() : __INT_MAX__) && (vb->size() > 0 ? vb->back().GetSize() : 0) != 1)
             {
                 move(TowerB, TowerA);
             }
-            // else if ((vc->back().GetSize() < va->end()->GetSize()))
             else if ((vc->size() > 0 ? vc->back().GetSize() : __INT_MAX__) < (va->size() > 0 ? va->back().GetSize() : __INT_MAX__) && (vc->size() > 0 ? vc->back().GetSize() : 0) != 1)
             {
                 move(TowerC, TowerA);
             }
-            // else if ((vc->back().GetSize() < vb->end()->GetSize()))
             else if ((vc->size() > 0 ? vc->back().GetSize() : __INT_MAX__) < (vb->size() > 0 ? vb->back().GetSize() : __INT_MAX__) && (vc->size() > 0 ? vc->back().GetSize() : 0) != 1)
             {
                 move(TowerC, TowerB);

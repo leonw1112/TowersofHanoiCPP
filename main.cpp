@@ -10,9 +10,18 @@ int main()
     cin >> sli;
     Game *g = new Game();
 
-    // g->setup(sli);
-    g->load();
-    g->solve();
+    g->setup(sli);
+    // g->load();
+
+    try
+    {
+        g->solve();
+    }
+    catch (const char *msg)
+    {
+        cout << "cought exception: " << msg << endl;
+    }
     delete g;
+
     return 0;
 }
